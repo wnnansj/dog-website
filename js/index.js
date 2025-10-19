@@ -1,0 +1,148 @@
+	/*  获取导航的  实例 */
+const headerEl = document.querySelector("header");
+const scrolltotop = document.querySelector(".scrolltotop");
+
+	/*  监听事件（当窗口滑动时） */
+window.addEventListener("scroll",()=>{
+	/*  获取菜单栏的高度 */
+	let height = headerEl.getBoundingClientRect().height;
+	/*  判断向下滑动的距离是否超过800，超过后出现  */
+	if(window.pageYOffset - height > 800){
+		/*  判断headerEl是否已经有stickyzhege class,没有再添加 */
+		if(!headerEl.classList.contains("sticky")){
+			headerEl.classList.add("sticky");
+		}
+	}else{
+			/*  没超过的时候移除 sticky 样式 */
+		headerEl.classList.remove("sticky");		
+	}
+
+
+		/*  下滑超过1500后返回顶部按钮再出现 */
+	if(window.pageYOffset - height > 1500){
+	scrolltotop.style.display = "block";	
+	}else{
+	scrolltotop.style.display = "none";	
+	}
+});
+
+
+
+
+
+const glide = new Glide(".glide");
+glide.mount();
+
+const isotope = new Isotope(".cases",{
+	layouMode:"fitRows",		/*  行模式布局，每行占满后，自动换行 */
+	itemSelector:".case-item"	
+	
+});
+
+	/*  获取筛选按钮的  实例 */
+const filterBtns = document.querySelector(".filter-btns");
+
+	/*  直接给筛选按钮的容器设置事件（触发效果）  */
+	/*  给副容器设置事件，就不用给每个摁钮单独设置了  */
+	/*  注册一个click点击事件  */
+filterBtns.addEventListener("click",e => {
+	/*  e是Event 的缩写，  */
+	let { target } = e;
+	/*  获取点击的摁钮对应的类别（前面自定义好的）  */
+	const filterOption = target.getAttribute("data-filter");
+	/*  如果有的话  */
+	if(filterOption){
+		/*  把已有的active取消，把点中的摁钮加上active  */
+		document.querySelectorAll(".filter-btn.active").forEach(
+		btn => btn.classList.remove("active"));
+		/*  把当前摁钮的active加上  */
+		target.classList.add("active");
+	/*  通过调用arrange函数来筛选对象  */
+	isotope.arrange({ filter: filterOption});
+	}
+});
+
+
+
+/*
+const captionsEL = document.querySelectorall(".slide-caption");
+
+glide.on(["mount.after","run.after"],() => {
+	const caption = captionsEL[glide.index];
+	anime({
+	targets:caption.children,
+	opacity:[0,1],
+	duration:400,
+	easing:"linear",
+	delay:anime.stagger(400,{start:300}),
+	translateY:[anime.stagger([40,10]),0]
+	});
+});
+
+glide.on("run.before",()=> {
+	document.querySelectorall(".slide-caption > *").forEach(el => {
+	el.style.opacity = 0;
+	});
+});
+
+*/
+
+/* 333333*/
+	/*  选择加载滚动效果的元素（样式名称）   */
+const scroll = new SmoothScroll('nav a[href*="#"], .scrolltotop a[href*="#"]',{
+	header:"header",  	/*  是否有固定导航，有，传递样式header进去   */
+	offset:80    	/*  定位到区域后多滚动80像素   */
+});
+
+
+
+	/*  了解更多增加跳转（到关于我们）   */
+
+
+		/*  获取按钮 实例   */
+const exploreBtnEls = document.querySelectorAll(".explore-btn");
+		/*  有两个了解更多的摁钮，所以要遍历一下   */
+exploreBtnEls.forEach(exploreBtnEl => {
+			/*  注册一个点击事件   */
+	exploreBtnEl.addEventListener("click",() => {
+			/*  用处理函数animateScroll，来传递参数 about-us   */
+		scroll.animateScroll(document.querySelector("#about-us"));
+	});
+});
+
+
+
+
+/*2222222222*/
+
+			/*  声明一下通用效果配置项，后面也会用到   */
+
+const staggeringOption = {
+delay:300,   	    /*  延迟300毫秒出现   */
+distance:"50px",    /*  从下到上移动出现（50px）   */
+duration:400,		/*  动画执行500毫秒   */
+easing:"ease-in-out",	/*  动画效果函数   */
+origin:"bottom"  	/*  从下到上出现/top是从上往下   */
+};
+
+
+			/*  要用效果显示的对象（样式名称）   */
+			/*  会同时出现，有一个淡入的效果   */
+ScrollReveal().reveal(".feature",{ ...staggeringOption,interval:250});
+					/*    把staggeringOption中的配置项都引入进来 
+					参数interval：350， 每个feature间隔350毫秒轮流出现	*/
+
+ScrollReveal().reveal(".service-item",{ ...staggeringOption,interval:250});
+
+
+
+
+const burgerEl = document.querySelector(".burger");
+
+burgerEl.addEventListener("click",()=>{
+	headerEl.classList.toggle("open");
+});
+
+
+
+

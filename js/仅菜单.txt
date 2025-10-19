@@ -1,0 +1,22 @@
+	/*  获取导航的  实例 */
+const headerEl = document.querySelector("header");
+
+	/*  监听事件（当窗口滑动时） */
+window.addEventListener("scroll",()=>{
+	/*  获取菜单栏的高度 */
+	let height = headerEl.getBoundingClientRect().height;
+	/*  判断向下滑动的距离是否超过800，超过后出现  */
+	if(window.pageYOffset - height > 800){
+		/*  判断headerEl是否已经有stickyzhege class,没有再添加 */
+		if(!headerEl.classList.contains("sticky")){
+			headerEl.classList.add("sticky");
+		}
+	}else{
+			/*  没超过的时候移除 sticky 样式 */
+		headerEl.classList.remove("sticky");		
+	}
+});
+
+
+
+
